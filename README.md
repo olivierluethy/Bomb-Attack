@@ -50,7 +50,7 @@ I was working in the office when I discovered a new idea. A game in which the pr
 3. Now right click on your folder or place and then click on "Git Bash Here"
 4. Finally you will see a new program. If you do you only have to enter this
    ```sh
-   git clone https://github.com/Oli7000/Bomb-Attack.git
+   git clone http://192.168.100.57:3000/Olivier_Luethy/Bomb-Attack.git
    ```
 <!-- PROBLEM-SOLVING DURING PROJECT -->
 ## Problems during project
