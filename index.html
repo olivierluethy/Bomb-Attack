@@ -4,23 +4,97 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bomb-Attack</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0e17">
+    <title>Bomb Attack</title>
     <link rel="shortcut icon" href="images/bomb.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="timer">
-        <p id="timer"></p>
-        <img src="images/bomb.png" alt="">
+    <!-- Full-screen particle/effects canvas (sparks + explosion) -->
+    <canvas id="fx"></canvas>
+    <!-- White flash layer for the explosion -->
+    <div id="flash"></div>
+
+    <main class="game" id="game">
+        <header class="topbar">
+            <h1 class="title">BOMB<span>ATTACK</span></h1>
+            <p class="subtitle">Defuse the bomb — guess the secret number <b>1–10</b> before the fuse burns out.</p>
+        </header>
+
+        <!-- Stage: timer ring + bomb -->
+        <section class="stage">
+            <!-- Circular countdown -->
+            <div class="timer" id="timer" aria-live="off">
+                <svg class="timer__ring" viewBox="0 0 120 120" aria-hidden="true">
+                    <circle class="timer__track" cx="60" cy="60" r="54" />
+                    <circle class="timer__progress" id="ring" cx="60" cy="60" r="54" />
+                </svg>
+                <div class="timer__readout">
+                    <span class="timer__num" id="time">10</span>
+                    <span class="timer__label">SEC</span>
+                </div>
+            </div>
+
+            <!-- Bomb + fuse -->
+            <div class="bomb-wrap" id="bombWrap">
+                <svg class="fuse" id="fuseSvg" viewBox="0 0 200 200" aria-hidden="true">
+                    <!-- charred remnant (full path, dim) -->
+                    <path id="fuseTrail" d="M100,78 C100,40 150,46 156,18" />
+                    <!-- live unburnt fuse (shrinks toward bomb) -->
+                    <path id="fuseLive" d="M100,78 C100,40 150,46 156,18" />
+                </svg>
+                <div class="flame" id="flame" aria-hidden="true">
+                    <span class="flame__core"></span>
+                    <span class="flame__glow"></span>
+                </div>
+                <div class="bomb" id="bomb">
+                    <span class="bomb__shine"></span>
+                    <span class="bomb__cap"></span>
+                </div>
+                <div class="bomb__shadow"></div>
+            </div>
+        </section>
+
+        <!-- Controls -->
+        <section class="panel" id="panel">
+            <div class="hint" id="hint" data-state="idle">
+                <span class="hint__icon" id="hintIcon">⌨</span>
+                <span class="hint__text" id="hintText">Type a number and hit Enter</span>
+            </div>
+
+            <form class="entry" id="entry" autocomplete="off" novalidate>
+                <input
+                    class="entry__input"
+                    id="guess"
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    maxlength="2"
+                    placeholder="1–10"
+                    aria-label="Your guess between 1 and 10"
+                    autofocus>
+                <button class="entry__btn" id="submit" type="submit">CUT&nbsp;WIRE</button>
+            </form>
+
+            <div class="guesses" id="guesses" aria-label="Previous guesses"></div>
+        </section>
+    </main>
+
+    <!-- Result overlay (win / lose) -->
+    <div class="overlay" id="overlay" hidden>
+        <div class="overlay__card" id="overlayCard">
+            <div class="overlay__emoji" id="overlayEmoji">💥</div>
+            <h2 class="overlay__title" id="overlayTitle">Boom!</h2>
+            <p class="overlay__msg" id="overlayMsg"></p>
+            <button class="overlay__btn" id="again" type="button">PLAY AGAIN</button>
+            <p class="overlay__hint">Press <kbd>Enter</kbd> to restart</p>
+        </div>
     </div>
-    <h1>Bomb-Attack</h1>
-    <p>Guess the number of the Computer between 0 and 10</p>
-    <input type="text" placeholder="Enter guess"><br><br>
-    <button> Check </button>
-    <h2 style="display: none;">You won</h2>
-    <h3></h3>
 
     <script src="script.js"></script>
 </body>
