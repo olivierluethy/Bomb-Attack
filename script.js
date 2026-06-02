@@ -369,8 +369,11 @@
 
         function resize() {
             DPR = Math.min(2, window.devicePixelRatio || 1);
-            W = canvas.clientWidth = window.innerWidth;
-            H = canvas.clientHeight = window.innerHeight;
+            // clientWidth/clientHeight are read-only getters — never assign to them.
+            // The element is sized to the viewport by CSS (#fx { width:100%; height:100% });
+            // here we only set the backing drawing buffer for crisp, DPR-aware rendering.
+            W = window.innerWidth;
+            H = window.innerHeight;
             canvas.width = Math.floor(W * DPR);
             canvas.height = Math.floor(H * DPR);
             ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
