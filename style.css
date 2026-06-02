@@ -247,11 +247,15 @@ body::after {
 .fuse {
     position: absolute;
     left: 50%;
-    bottom: 52%;
+    /* lowered so the fuse's bottom anchor sinks into the bomb cap
+       (anchor lands ~14% of wrap height; cap spans ~10%–22%) */
+    bottom: 38%;
     width: 78%;
     height: 78%;
     transform: translateX(-50%);
     overflow: visible;
+    /* below the bomb (z-index 4) so the cap overlaps the junction and the
+       fuse appears to ENTER the bomb; the flame (z-index 5) stays on top */
     z-index: 3;
     pointer-events: none;
 }
@@ -328,7 +332,9 @@ body::after {
 
 .bomb {
     position: relative;
-    z-index: 2;
+    /* above the fuse (z-index 3) so the body/cap cover the fuse's buried end,
+       making it read as embedded rather than glued on top */
+    z-index: 4;
     width: 64%;
     aspect-ratio: 1;
     border-radius: 50%;
